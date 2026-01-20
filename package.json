@@ -1,0 +1,22 @@
+{
+  "name": "dialga",
+  "version": "0.1.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "scrape": "node --experimental-strip-types src/scraper/cli.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.20.0",
+  "dependencies": {
+    "cheerio": "^1.1.2"
+  },
+  "devDependencies": {
+    "@sindresorhus/tsconfig": "^8.1.0",
+    "@types/node": "^25.0.9",
+    "typescript": "^5.9.3"
+  }
+}
