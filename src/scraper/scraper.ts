@@ -84,47 +84,33 @@ export function filterEvents(entries: NewsEntry[]): NewsEntry[] {
 		.filter(entry => isRecentPost(entry));
 }
 
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const DATE_REGEX = new RegExp(`(${MONTHS.join('|')})\\s+(\\d{1,2})(?:,?\\s+(\\d{4}))?`, 'gi');
+const TIME_REGEX = /(\d{1,2}:\d{2})\s*(a\.?m\.?|p\.?m\.?)/gi;
+
+function extractDates(text: string, fallbackYear: string): string[] {
+	return [...text.matchAll(DATE_REGEX)].map(([, month, day, year]) => {
+		const monthIndex = MONTHS.findIndex(m => m.toLowerCase() === month!.toLowerCase()) + 1;
+		return `${year ?? fallbackYear}-${String(monthIndex).padStart(2, '0')}-${day!.padStart(2, '0')}`;
+	});
+}
+
+function extractTimes(text: string): string[] {
+	return [...text.matchAll(TIME_REGEX)].map(([, time, period]) =>
+		`${time} ${period!.replace(/\./g, '').toLowerCase()}`
+	);
+}
+
 function parseDateTime(text: string): { startDate: string | null; startTime: string | null; endDate: string | null; endTime: string | null } {
-	// Match patterns like:
-	// "Saturday, January 31, at 6:00 a.m. to Sunday, February 1, 2026, at 9:00 p.m. local time"
-	// "Saturday, January 24, 2026, from 2:00 p.m. to 5:00 p.m. local time"
-
-	const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-	const monthPattern = months.join('|');
-
-	// Pattern for date: Month Day, Year or Month Day (year may come later)
-	const datePattern = new RegExp(`(${monthPattern})\\s+(\\d{1,2})(?:,?\\s+(\\d{4}))?`, 'gi');
-
-	// Pattern for time: H:MM a.m./p.m.
-	const timePattern = /(\d{1,2}:\d{2})\s*(a\.?m\.?|p\.?m\.?)/gi;
-
-	// First, find any explicit year in the text
-	const yearMatch = text.match(/\b(202\d)\b/);
-	const defaultYear = yearMatch ? yearMatch[1] : new Date().getFullYear().toString();
-
-	const dates: string[] = [];
-	const times: string[] = [];
-
-	let match;
-	while ((match = datePattern.exec(text)) !== null) {
-		const month = match[1]!;
-		const day = match[2]!;
-		const year = match[3] ?? defaultYear;
-		const monthIndex = months.findIndex(m => m.toLowerCase() === month.toLowerCase()) + 1;
-		dates.push(`${year}-${String(monthIndex).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
-	}
-
-	while ((match = timePattern.exec(text)) !== null) {
-		const time = match[1]!;
-		const period = match[2]!.replace(/\./g, '').toLowerCase();
-		times.push(`${time} ${period}`);
-	}
+	const fallbackYear = text.match(/\b(202\d)\b/)?.[1] ?? String(new Date().getFullYear());
+	const dates = extractDates(text, fallbackYear);
+	const times = extractTimes(text);
 
 	return {
-		startDate: dates[0] || null,
-		startTime: times[0] || null,
-		endDate: dates[1] || dates[0] || null,
-		endTime: times[1] || null,
+		startDate: dates[0] ?? null,
+		startTime: times[0] ?? null,
+		endDate: dates[1] ?? dates[0] ?? null,
+		endTime: times[1] ?? null,
 	};
 }
 
