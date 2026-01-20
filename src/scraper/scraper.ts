@@ -1,4 +1,5 @@
 import * as cheerio from 'cheerio';
+import pMap from 'p-map';
 
 const BASE_URL = 'https://pokemongo.com';
 const NEWS_URL = `${BASE_URL}/news`;
@@ -149,9 +150,7 @@ export async function scrapeEvents(): Promise<ScraperOutput> {
 	const allEntries = await fetchNewsPage();
 	const matchingEntries = filterEvents(allEntries);
 
-	const events = await Promise.all(
-		matchingEntries.map(entry => fetchEventDetails(entry))
-	);
+	const events = await pMap(matchingEntries, fetchEventDetails, { concurrency: 10 });
 
 	return { events };
 }
