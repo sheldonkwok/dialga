@@ -16,7 +16,6 @@ export type EventData = {
 	startTime: string | null;
 	endDate: string | null;
 	endTime: string | null;
-	error: string | null;
 };
 
 export type ScraperOutput = {
@@ -129,41 +128,21 @@ function parseDateTime(text: string): { startDate: string | null; startTime: str
 }
 
 export async function fetchEventDetails(entry: NewsEntry): Promise<EventData> {
-	try {
-		const response = await fetch(entry.url);
-		if (!response.ok) {
-			return {
-				...entry,
-				startDate: null,
-				startTime: null,
-				endDate: null,
-				endTime: null,
-				error: `Failed to fetch: ${response.status}`,
-			};
-		}
-
-		const html = await response.text();
-		const $ = cheerio.load(html);
-
-		// Look for date/time in headings and paragraphs
-		const textContent = $('h1, h2, h3, p').text();
-		const dateTime = parseDateTime(textContent);
-
-		return {
-			...entry,
-			...dateTime,
-			error: null,
-		};
-	} catch (error) {
-		return {
-			...entry,
-			startDate: null,
-			startTime: null,
-			endDate: null,
-			endTime: null,
-			error: error instanceof Error ? error.message : 'Unknown error',
-		};
+	const response = await fetch(entry.url);
+	if (!response.ok) {
+		throw new Error(`Failed to fetch ${entry.url}: ${response.status}`);
 	}
+
+	const html = await response.text();
+	const $ = cheerio.load(html);
+
+	const textContent = $('h1, h2, h3, p').text();
+	const dateTime = parseDateTime(textContent);
+
+	return {
+		...entry,
+		...dateTime,
+	};
 }
 
 export async function scrapeEvents(): Promise<ScraperOutput> {
