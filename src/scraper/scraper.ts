@@ -173,7 +173,8 @@ export async function fetchEventDetails(entry: NewsEntry): Promise<EventData> {
 	const $ = cheerio.load(html);
 
 	const h2Title = $('h2').first().text().trim();
-	const textContent = $('h1, h2, h3, p').text();
+	const textContent = $('article p').first().text();
+
 	const dateTime = parseDateTime(textContent);
 
 	return {
@@ -187,7 +188,7 @@ export async function scrapeEvents(): Promise<ScraperOutput> {
 	const allEntries = await fetchNewsPage();
 	const matchingEntries = filterEvents(allEntries);
 
-	const events = await pMap(matchingEntries, fetchEventDetails, { concurrency: 10 });
+	const events = await pMap(matchingEntries, fetchEventDetails, { concurrency: 20 });
 
 	return { events };
 }
