@@ -93,6 +93,7 @@ export function generateIcs(events: EventData[]): string {
 		'VERSION:2.0',
 		'PRODID:-//Dialga//Pokemon GO Events//EN',
 		'CALSCALE:GREGORIAN',
+		'X-WR-CALNAME:Pokemon Go Events',
 		...vevents.map(serializeVEvent),
 		'END:VCALENDAR',
 	];
