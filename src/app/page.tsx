@@ -14,7 +14,7 @@ export default async function HomePage() {
 	return (
 		<main>
 			<h1>Pokemon Go Events</h1>
-			<p><a href="/calendar.ics">Subscribe to calendar</a></p>
+			<p><a href="/calendar.ics">Subscribe to calendar by copying this link and adding to your calendar</a></p>
 			<table>
 				<thead>
 					<tr>
