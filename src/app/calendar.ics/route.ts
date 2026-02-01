@@ -9,7 +9,7 @@ export async function GET() {
 		headers: {
 			'Content-Type': 'text/calendar; charset=utf-8',
 			'Content-Disposition': 'attachment; filename="calendar.ics"',
-			'Cache-Control': 's-maxage=86400',
+			'Cache-Control': 's-maxage=3600',
 		},
 	});
 }
