@@ -171,11 +171,13 @@ export async function fetchEventDetails(entry: NewsEntry): Promise<EventData> {
 	const html = await response.text();
 	const $ = cheerio.load(html);
 
+	const h2Title = $('h2').first().text().trim();
 	const textContent = $('h1, h2, h3, p').text();
 	const dateTime = parseDateTime(textContent);
 
 	return {
 		...entry,
+		...(h2Title && { title: h2Title }),
 		...dateTime,
 	};
 }

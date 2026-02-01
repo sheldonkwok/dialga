@@ -3,6 +3,7 @@ import { EVENT_TIMEZONE } from '../scraper/scraper.ts';
 
 type VEvent = {
 	summary: string;
+	description: string;
 	url: string;
 	dtstart: string;
 	dtend: string;
@@ -60,6 +61,7 @@ function eventToVEvent(event: EventData): VEvent | null {
 
 	return {
 		summary: event.title,
+		description: event.url,
 		url: event.url,
 		dtstart: formatIcsDate(event.startDate),
 		dtend: formatIcsDate(event.endDate ?? event.startDate),
@@ -73,6 +75,7 @@ function serializeVEvent(vevent: VEvent): string {
 		`DTSTART;TZID=${EVENT_TIMEZONE}:${vevent.dtstart}`,
 		`DTEND;TZID=${EVENT_TIMEZONE}:${vevent.dtend}`,
 		`SUMMARY:${escapeIcsText(vevent.summary)}`,
+		`DESCRIPTION:${escapeIcsText(vevent.description)}`,
 		`URL:${vevent.url}`,
 		`UID:${vevent.uid}`,
 		'END:VEVENT',

@@ -47,6 +47,7 @@ test('generates VEVENT with correct PST date formatting', () => {
 	expect(ics).toContain('DTSTART;TZID=America/Los_Angeles:20250208T100000');
 	expect(ics).toContain('DTEND;TZID=America/Los_Angeles:20250209T200000');
 	expect(ics).toContain('SUMMARY:Dynamax Max Battle Weekend');
+	expect(ics).toContain('DESCRIPTION:https://pokemongo.com/en/post/dynamax-battle');
 	expect(ics).toContain('URL:https://pokemongo.com/en/post/dynamax-battle');
 	expect(ics).toContain('END:VEVENT');
 });
