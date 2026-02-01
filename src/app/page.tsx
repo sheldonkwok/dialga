@@ -12,6 +12,7 @@ export default async function HomePage() {
 	return (
 		<main>
 			<h1>Pokemon Go Events</h1>
+			<p><a href="/calendar.ics">Subscribe to calendar</a></p>
 			<table>
 				<thead>
 					<tr>
