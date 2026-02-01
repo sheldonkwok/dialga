@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const revalidate = 1800;
 
 import { scrapeEvents, EVENT_TIMEZONE } from '../scraper/scraper.ts';
 
