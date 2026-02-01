@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { scrapeEvents, EVENT_TIMEZONE } from '../scraper/scraper.ts';
 
 const dateFormat = new Intl.DateTimeFormat('en-US', {
