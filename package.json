@@ -4,6 +4,9 @@
   "description": "",
   "type": "module",
   "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "scrape": "node --experimental-strip-types src/scraper/cli.ts",
     "test": "vitest run"
   },
@@ -13,11 +16,16 @@
   "packageManager": "pnpm@10.20.0",
   "dependencies": {
     "cheerio": "^1.1.2",
-    "p-map": "^7.0.4"
+    "next": "^16.1.6",
+    "p-map": "^7.0.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@sindresorhus/tsconfig": "^8.1.0",
     "@types/node": "^25.0.9",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   }
