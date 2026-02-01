@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "scrape": "node --experimental-strip-types src/scraper/cli.ts",
-    "test": "vitest run"
+    "test": "vitest run",
+    "purge": "vercel cache purge --type cdn --yes"
   },
   "keywords": [],
   "author": "",

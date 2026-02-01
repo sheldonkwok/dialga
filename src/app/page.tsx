@@ -1,6 +1,8 @@
 export const revalidate = 1800;
 
+import { headers } from 'next/headers';
 import { scrapeEvents, EVENT_TIMEZONE } from '../scraper/scraper.ts';
+import { CopyButton } from './copy-button.tsx';
 
 const dateFormat = new Intl.DateTimeFormat('en-US', {
 	timeZone: EVENT_TIMEZONE,
@@ -9,12 +11,15 @@ const dateFormat = new Intl.DateTimeFormat('en-US', {
 });
 
 export default async function HomePage() {
-	const { events } = await scrapeEvents();
+	const [{ events }, hdrs] = await Promise.all([scrapeEvents(), headers()]);
+	const host = hdrs.get('host') ?? 'localhost:3000';
+	const protocol = hdrs.get('x-forwarded-proto') ?? 'http';
+	const calendarUrl = `${protocol}://${host}/calendar.ics`;
 
 	return (
 		<main>
 			<h1>Pokemon Go Events</h1>
-			<p><a href="/calendar.ics">Subscribe to calendar by copying this link and adding to your calendar</a></p>
+			<p><CopyButton text={calendarUrl} /></p>
 			<table>
 				<thead>
 					<tr>
