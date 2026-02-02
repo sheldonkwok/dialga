@@ -2,7 +2,7 @@ import * as cheerio from 'cheerio';
 import pMap from 'p-map';
 
 const BASE_URL = 'https://pokemongo.com';
-const NEWS_URL = `${BASE_URL}/news`;
+export const NEWS_URL = `${BASE_URL}/news`;
 
 export type NewsEntry = {
 	title: string;

@@ -1,8 +1,9 @@
 export const revalidate = 1800;
 
 import { headers } from 'next/headers';
-import { scrapeEvents, EVENT_TIMEZONE } from '../scraper/scraper.ts';
+import { scrapeEvents, EVENT_TIMEZONE, NEWS_URL } from '../scraper/scraper.ts';
 import { CopyButton } from './copy-button.tsx';
+
 
 const dateFormat = new Intl.DateTimeFormat('en-US', {
 	timeZone: EVENT_TIMEZONE,
@@ -19,6 +20,7 @@ export default async function HomePage() {
 	return (
 		<main>
 			<h1>Pokemon Go Events</h1>
+      <p>News from <a href={NEWS_URL} target="_blank" rel="noopener noreferrer">{NEWS_URL}</a></p>
 			<p><CopyButton text={calendarUrl} /></p>
 			<table>
 				<thead>
