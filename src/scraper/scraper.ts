@@ -173,7 +173,7 @@ export async function fetchEventDetails(entry: NewsEntry): Promise<EventData> {
 	const $ = cheerio.load(html);
 
 	const h2Title = $('h2').first().text().trim();
-	const textContent = $('article p').first().text();
+	const textContent = $('main p').first().text();
 
 	const dateTime = parseDateTime(textContent);
 
