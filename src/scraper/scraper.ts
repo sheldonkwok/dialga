@@ -29,8 +29,8 @@ const EVENT_PATTERNS = [
   /community day\:/i,
 ];
 
-function matchesEventPattern(title: string): boolean {
-	return EVENT_PATTERNS.some(pattern => pattern.test(title));
+function matchesEventPattern(entry: NewsEntry): boolean {
+	return EVENT_PATTERNS.some(pattern => pattern.test(entry.title)) || /raid-day/i.test(entry.url);
 }
 
 export async function fetchNewsPage(): Promise<NewsEntry[]> {
@@ -81,7 +81,7 @@ function isRecentPost(entry: NewsEntry): boolean {
 
 export function filterEvents(entries: NewsEntry[]): NewsEntry[] {
 	return entries
-		.filter(entry => matchesEventPattern(entry.title))
+		.filter(entry => matchesEventPattern(entry))
 		.filter(entry => isRecentPost(entry));
 }
 

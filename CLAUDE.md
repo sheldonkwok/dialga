@@ -16,3 +16,7 @@ Use `@/openspec/AGENTS.md` to learn:
 Keep this managed block so 'openspec update' can refresh the instructions.
 
 <!-- OPENSPEC:END -->
+
+## Package Manager
+
+This project uses **pnpm**. Always use `pnpm` instead of `npm` or `yarn` for installing dependencies and running scripts.
