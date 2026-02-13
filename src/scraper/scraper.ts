@@ -35,6 +35,14 @@ function matchesEventPattern(entry: NewsEntry): boolean {
 }
 
 export async function fetchNewsPage(): Promise<NewsEntry[]> {
+	const cache = getCache();
+	const cacheKey = 'news-page';
+
+	const cached = await cache.get(cacheKey);
+	if (cached) {
+		return cached as NewsEntry[];
+	}
+
 	const response = await fetch(NEWS_URL);
 	if (!response.ok) {
 		throw new Error(`Failed to fetch news page: ${response.status}`);
@@ -62,6 +70,11 @@ export async function fetchNewsPage(): Promise<NewsEntry[]> {
 			const url = href.startsWith('http') ? href : `${BASE_URL}${href}`;
 			entries.push({ title, url, postedDate });
 		}
+	});
+
+	await cache.set(cacheKey, entries, {
+		ttl: 60,
+		tags: ['news-page'],
 	});
 
 	return entries;
