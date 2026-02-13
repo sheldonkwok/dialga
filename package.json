@@ -17,6 +17,7 @@
   "license": "MIT",
   "packageManager": "pnpm@10.20.0",
   "dependencies": {
+    "@vercel/functions": "^3.4.2",
     "cheerio": "^1.1.2",
     "next": "^16.1.6",
     "p-map": "^7.0.4",

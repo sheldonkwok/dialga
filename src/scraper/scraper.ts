@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio';
 import pMap from 'p-map';
+import { getCache } from '@vercel/functions';
 
 const BASE_URL = 'https://pokemongo.com';
 export const NEWS_URL = `${BASE_URL}/news`;
@@ -164,6 +165,19 @@ function parseDateTime(text: string): { startDate: Date | null; endDate: Date | 
 }
 
 export async function fetchEventDetails(entry: NewsEntry): Promise<EventData> {
+	const cache = getCache();
+	const cacheKey = `event-details:${entry.url}`;
+
+	const cached = await cache.get(cacheKey);
+	if (cached) {
+		const data = cached as Record<string, unknown>;
+		return {
+			...data,
+			startDate: data['startDate'] ? new Date(data['startDate'] as string) : null,
+			endDate: data['endDate'] ? new Date(data['endDate'] as string) : null,
+		} as EventData;
+	}
+
 	const response = await fetch(entry.url);
 	if (!response.ok) {
 		throw new Error(`Failed to fetch ${entry.url}: ${response.status}`);
@@ -177,11 +191,18 @@ export async function fetchEventDetails(entry: NewsEntry): Promise<EventData> {
 
 	const dateTime = parseDateTime(textContent);
 
-	return {
+	const result: EventData = {
 		...entry,
 		...(h2Title && { title: h2Title }),
 		...dateTime,
 	};
+
+	await cache.set(cacheKey, result, {
+		ttl: 3600,
+		tags: ['event-details'],
+	});
+
+	return result;
 }
 
 export async function scrapeEvents(): Promise<ScraperOutput> {
