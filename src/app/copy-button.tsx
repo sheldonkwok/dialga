@@ -28,7 +28,8 @@ export function CopyButton({ text }: { text: string }) {
 
 	return (
     <>
-      <p>Use button to copy the link and add to your calendar</p>
+      <span>Use button to copy the link and add to your calendar</span>
+      <br />
       <button type="button" onClick={handleClick}>
         {copied ? 'Copied!' : 'Copy Calendar Link'}
       </button>
