@@ -1,22 +1,41 @@
-<!-- OPENSPEC:START -->
-# OpenSpec Instructions
+# Project Context
 
-These instructions are for AI assistants working in this project.
+## Purpose
+Create a website that has past 3 months of Pokemon Go events that I care about. 
+The data is scraped from this website here https://pokemongo.com/news
 
-Always open `@/openspec/AGENTS.md` when the request:
-- Mentions planning or proposals (words like proposal, spec, change, plan)
-- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
-- Sounds ambiguous and you need the authoritative spec before coding
+I care about only these events
+- Dynamax Max Battle Weekends 
+- Shadow Raid Day
+- Community Day
 
-Use `@/openspec/AGENTS.md` to learn:
-- How to create and apply change proposals
-- Spec format and conventions
-- Project structure and guidelines
 
-Keep this managed block so 'openspec update' can refresh the instructions.
+## Tech Stack
+- typescript
+- nextjs
+- ics calendar
 
-<!-- OPENSPEC:END -->
+## Project Conventions
 
-## Package Manager
+### Code Style
+[Describe your code style preferences, formatting rules, and naming conventions]
 
-This project uses **pnpm**. Always use `pnpm` instead of `npm` or `yarn` for installing dependencies and running scripts.
+### Architecture Patterns
+[Document your architectural decisions and patterns]
+
+### Testing Strategy
+[Explain your testing approach and requirements]
+
+### Git Workflow
+- conventional commit
+- conventional branch
+
+## Domain Context
+Scrape the main news page and identify the different news entries.
+For the specific events we care about, we need to follow the url to get the date and time that the event occurs.
+
+## Important Constraints
+Always use pnpm instead of npm
+
+## External Dependencies
+[Document key external services, APIs, or systems]
