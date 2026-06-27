@@ -27,7 +27,7 @@ export type ScraperOutput = {
 const EVENT_PATTERNS = [
 	/(giganta|dyna)max .* max battle/i,
 	/raid day/i,
-  /community day\:/i,
+  /community day/i,
 ];
 
 function matchesEventPattern(entry: NewsEntry): boolean {
