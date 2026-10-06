@@ -28,7 +28,12 @@ const EVENT_PATTERNS = [
 	/(giganta|dyna)max .* max battle/i,
 	/raid day/i,
   /community day/i,
+	/taken over/i,
+	/team go rocket/i,
 ];
+
+// Team GO Rocket event pages have a "Save Shadow <Pokemon>!*" heading for Giovanni's Shadow Pokemon
+const GIOVANNI_SHADOW_REGEX = /^Save Shadow [^!*]+/i;
 
 function matchesEventPattern(entry: NewsEntry): boolean {
 	return EVENT_PATTERNS.some(pattern => pattern.test(entry.title)) || /raid-day/i.test(entry.url);
@@ -199,7 +204,9 @@ export async function fetchEventDetails(entry: NewsEntry): Promise<EventData> {
 	const html = await response.text();
 	const $ = cheerio.load(html);
 
-	const h2Title = $('h2').first().text().trim();
+	const h2Titles = $('h2').map((_, element) => $(element).text().trim()).get();
+	const giovanniTitle = h2Titles.map(title => title.match(GIOVANNI_SHADOW_REGEX)?.[0].trim()).find(Boolean);
+	const h2Title = giovanniTitle ?? h2Titles[0];
 	const textContent = $('main p').first().text();
 
 	const dateTime = parseDateTime(textContent);
