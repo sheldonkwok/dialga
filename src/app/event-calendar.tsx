@@ -1,7 +1,11 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { CATEGORY_LABELS, type CalendarEvent } from './event-types.ts';
+import { Button } from './button.tsx';
+import { EventList } from './event-list.tsx';
+import type { CalendarEvent } from './event-types.ts';
+import { Panel } from './panel.tsx';
+import styles from './event-calendar.module.css';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -55,25 +59,25 @@ export function EventCalendar({ events, today }: { events: CalendarEvent[]; toda
 	}
 
 	return (
-		<section className="panel calendar" aria-label="Event calendar">
-			<header className="calendar-bar">
-				<button type="button" className="btn btn-square" onClick={() => shiftMonth(-1)} aria-label="Previous month">
+		<Panel className={styles.calendar} aria-label="Event calendar">
+			<header className={styles.bar}>
+				<Button variant="square" onClick={() => shiftMonth(-1)} aria-label="Previous month">
 					◀
-				</button>
-				<h2 className="calendar-title" aria-live="polite">
+				</Button>
+				<h2 className={styles.title} aria-live="polite">
 					{monthFormat.format(new Date(Date.UTC(view.year, view.month, 1)))}
 				</h2>
-				<button type="button" className="btn btn-square" onClick={() => shiftMonth(1)} aria-label="Next month">
+				<Button variant="square" onClick={() => shiftMonth(1)} aria-label="Next month">
 					▶
-				</button>
-				<button type="button" className="btn calendar-today" onClick={goToToday}>
+				</Button>
+				<Button className={styles.today} onClick={goToToday}>
 					Today
-				</button>
+				</Button>
 			</header>
 
-			<div className="calendar-grid">
+			<div className={styles.grid}>
 				{WEEKDAYS.map(weekday => (
-					<div key={weekday} className="calendar-weekday">
+					<div key={weekday} className={styles.weekday}>
 						{weekday}
 					</div>
 				))}
@@ -82,51 +86,39 @@ export function EventCalendar({ events, today }: { events: CalendarEvent[]; toda
 						<button
 							key={cell.key}
 							type="button"
-							className="day"
+							className={styles.day}
 							data-today={cell.key === today || undefined}
 							data-past={cell.key < today || undefined}
 							aria-pressed={cell.key === selected}
 							aria-label={`${dayFormat.format(parseKey(cell.key))}, ${cell.events.length} ${cell.events.length === 1 ? 'event' : 'events'}`}
 							onClick={() => setSelected(cell.key)}
 						>
-							<span className="day-number">{cell.day}</span>
-							<span className="day-events">
+							<span className={styles.dayNumber}>{cell.day}</span>
+							<span className={styles.dayEvents}>
 								{cell.events.map(event => (
-									<span key={event.url} className="chip" data-category={event.category}>
+									<span key={event.url} className={styles.chip} data-category={event.category}>
 										{event.title}
 									</span>
 								))}
 							</span>
 						</button>
 					) : (
-						<div key={`blank-${index}`} className="day day-blank" />
+						<div key={`blank-${index}`} className={`${styles.day} ${styles.dayBlank}`} />
 					),
 				)}
 			</div>
 
-			<div className="day-detail" aria-live="polite">
-				<h3 className="day-detail-title">
-					<span className="cursor" aria-hidden="true">▶</span>
+			<div className={styles.detail} aria-live="polite">
+				<h3 className={styles.detailTitle}>
+					<span className={styles.cursor} aria-hidden="true">▶</span>
 					{dayFormat.format(parseKey(selected))}
 				</h3>
 				{selectedEvents.length === 0 ? (
-					<p className="muted">No events on this day.</p>
+					<p className={styles.muted}>No events on this day.</p>
 				) : (
-					<ul className="event-list">
-						{selectedEvents.map(event => (
-							<li key={event.url} className="event-row">
-								<span className="badge" data-category={event.category}>
-									{CATEGORY_LABELS[event.category]}
-								</span>
-								<a href={event.url} target="_blank" rel="noopener noreferrer">
-									{event.title}
-								</a>
-								<span className="event-when">{event.when}</span>
-							</li>
-						))}
-					</ul>
+					<EventList events={selectedEvents} />
 				)}
 			</div>
-		</section>
+		</Panel>
 	);
 }

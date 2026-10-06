@@ -35,7 +35,6 @@ Scrape the main news page and identify the different news entries.
 For the specific events we care about, we need to follow the url to get the date and time that the event occurs.
 
 ## Important Constraints
-Always use pnpm instead of npm
 
 ## External Dependencies
 [Document key external services, APIs, or systems]
