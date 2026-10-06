@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Button } from './button.tsx';
 
 export function CopyButton({ text }: { text: string }) {
 	const [copied, setCopied] = useState(false);
@@ -27,8 +28,8 @@ export function CopyButton({ text }: { text: string }) {
 	}
 
 	return (
-		<button type="button" className="btn btn-primary" onClick={handleClick}>
+		<Button variant="primary" onClick={handleClick}>
 			{copied ? 'Copied!' : 'Copy link'}
-		</button>
+		</Button>
 	);
 }

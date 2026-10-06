@@ -1,0 +1,34 @@
+/* Stepped pixel corners drawn with box shadows */
+
+.panel {
+	background: var(--paper);
+	/* Variants set --panel-padding rather than padding, so the result never depends on stylesheet order */
+	padding: var(--panel-padding, 20px);
+	margin: 0 var(--px);
+	box-shadow:
+		0 calc(var(--px) * -1) 0 0 var(--ink),
+		0 var(--px) 0 0 var(--ink),
+		calc(var(--px) * -1) 0 0 0 var(--ink),
+		var(--px) 0 0 0 var(--ink),
+		0 calc(var(--px) * 3) 0 0 rgb(0 0 0 / 45%);
+}
+
+/* Shared by every panel heading. Sets no font-size so composing classes can pick their own */
+.heading {
+	font-family: var(--display);
+	font-weight: 400;
+	line-height: 1.5;
+	text-transform: uppercase;
+}
+
+.title {
+	composes: heading;
+	font-size: 14px;
+	margin-bottom: 12px;
+}
+
+@media (max-width: 720px) {
+	.panel {
+		padding: var(--panel-padding, 16px);
+	}
+}

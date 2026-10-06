@@ -1,3 +1,5 @@
+import styles from './pixel-sprite.module.css';
+
 const POKE_BALL = [
 	'....KKKKKK....',
 	'..KKRRRRRRKK..',
@@ -27,7 +29,7 @@ export function PokeBall({ size = 56 }: { size?: number }) {
 
 	return (
 		<svg
-			className="sprite"
+			className={styles.sprite}
 			width={size}
 			height={size}
 			viewBox={`0 0 ${width} ${POKE_BALL.length}`}

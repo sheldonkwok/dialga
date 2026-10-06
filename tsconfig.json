@@ -6,6 +6,7 @@
 		"jsx": "preserve",
 		"module": "esnext",
 		"moduleResolution": "bundler",
+		"noPropertyAccessFromIndexSignature": false,
 		"plugins": [{ "name": "next" }],
 		"paths": {
 			"@/*": ["./src/*"]

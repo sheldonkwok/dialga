@@ -1,0 +1,5 @@
+.sprite {
+	flex: none;
+	/* Light outline so the dark sprite edge reads against the night sky */
+	filter: drop-shadow(3px 0 0 var(--paper)) drop-shadow(-3px 0 0 var(--paper)) drop-shadow(0 3px 0 var(--paper)) drop-shadow(0 -3px 0 var(--paper));
+}

@@ -1,0 +1,93 @@
+.page {
+	max-width: 980px;
+	margin: 0 auto;
+	padding: 32px 16px 48px;
+	display: grid;
+	gap: 28px;
+}
+
+/* Masthead */
+
+.masthead {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	color: var(--paper);
+}
+
+.title {
+	font-family: var(--display);
+	font-size: clamp(18px, 4.2vw, 30px);
+	line-height: 1.4;
+	font-weight: 400;
+	text-shadow: var(--px) var(--px) 0 #000;
+	text-wrap: balance;
+}
+
+.tagline {
+	margin-top: 8px;
+	color: var(--star);
+}
+
+/* Subscribe */
+
+.subscribe {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.subscribeText {
+	min-width: 0;
+	flex: 1 1 320px;
+}
+
+.subscribeUrl {
+	display: block;
+	margin-top: 10px;
+	padding: 6px 10px;
+	background: var(--paper-shade);
+	border: 2px dashed var(--paper-line);
+	font-family: inherit;
+	overflow-wrap: anywhere;
+}
+
+/* Legend */
+
+.legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 24px;
+	color: var(--paper);
+}
+
+.legend li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.swatch {
+	width: 16px;
+	height: 16px;
+	background: var(--category);
+	border: 2px solid var(--paper);
+}
+
+.footer {
+	color: var(--star);
+	text-align: center;
+}
+
+.footer a:hover {
+	color: var(--accent);
+}
+
+@media (max-width: 720px) {
+	.page {
+		gap: 24px;
+		padding-top: 24px;
+	}
+}

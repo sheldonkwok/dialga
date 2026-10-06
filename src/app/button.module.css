@@ -1,0 +1,38 @@
+.btn {
+	font-family: var(--display);
+	font-size: 12px;
+	line-height: 1;
+	color: var(--ink);
+	background: var(--paper-shade);
+	border: var(--px) solid var(--ink);
+	padding: 12px 14px;
+	box-shadow: inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--paper-line);
+	white-space: nowrap;
+}
+
+.btn:hover {
+	background: var(--paper-bright);
+}
+
+.btn:active {
+	box-shadow: inset var(--px) var(--px) 0 0 var(--paper-line);
+	transform: translateY(2px);
+}
+
+.primary {
+	background: var(--accent);
+	color: var(--accent-ink);
+	box-shadow: inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 #1f9fb3;
+}
+
+.primary:hover {
+	background: #6fe2f2;
+}
+
+.primary:active {
+	box-shadow: inset var(--px) var(--px) 0 0 #1f9fb3;
+}
+
+.square {
+	padding: 12px;
+}
